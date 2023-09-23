@@ -40,12 +40,19 @@ export default class Ex_Shoe extends Component {
     handleViewDetail = (shoe) => {
       this.setState({detail: shoe});
     };
+    handleChangeQuantity =(id, option) =>{
+      let cloneCart = [...this.state.cart]
+      let index = cloneCart.findIndex((item) => item.id === id)
+      cloneCart[index].soLuong = cloneCart[index].soLuong + option;
+      cloneCart[index].soLuong ==0 && cloneCart.splice(index, 1)
+      this.setState({cart: cloneCart});
+    }
   render() {
     return (
       <div>
         <div className='row'>
             <div className='col-7'>
-                <Cart handleRemove={this.HandleRemove} cart={this.state.cart}/>
+                <Cart handleChangeQuantity={this.handleChangeQuantity} handleRemove={this.HandleRemove} cart={this.state.cart}/>
             </div>
             <div className='col-5'>
                 <ListShoe handleViewDetail={this.handleViewDetail} handleBuy={this.handleAdd} list={this.state.shoeArr}/>
